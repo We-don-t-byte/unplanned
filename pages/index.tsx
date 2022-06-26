@@ -4,6 +4,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import styles from '../styles/Home.module.css'
 
+import PlaceCard from '../components/PlaceCard'
+
 const Home: NextPage = () => {
   return (
     <div className={styles.container}>
@@ -18,8 +20,10 @@ const Home: NextPage = () => {
           Welcome to Unplanned
         </h1>
 
+        <PlaceCard name="Leo" description="Test" image="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4" />
+
         <p className={styles.description}>
-          Random text
+          Random text 2
         </p>
 
         <div className={styles.grid}>

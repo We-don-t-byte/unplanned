@@ -3,6 +3,7 @@ import { GetServerSideProps } from "next";
 import { prisma } from "../../lib/prisma";
 import { Prisma,User } from "@prisma/client";
 import { NextPage } from "next";
+import { useSession, signOut } from "next-auth/react";
 
 const selectUser = Prisma.validator<Prisma.UserArgs>()({
     select: {
@@ -35,11 +36,21 @@ export const getServerSideProps: GetServerSideProps<UserInfo> = async ({params})
 
 }
 const UserProfile: NextPage<UserInfo> = ({name, email,image}) => {
+    const { data: session, status } = useSession();
+    let after: JSX.Element = <h1>Loading...</h1>; 
+    if (session) {
+        after = 
+                    (<button onClick={() => { signOut() }} >
+                        Log out
+                    </button>)
+    }
+
     return (
         <div>
             <span>{name}</span><br/>
             <span>{email}</span>
             <img src={image || undefined}/>
+            {after}
         </div>
     )
 }
