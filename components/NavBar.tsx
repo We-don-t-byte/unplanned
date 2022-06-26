@@ -4,6 +4,14 @@ import { useRouter } from 'next/router';
 import { signOut, useSession } from "next-auth/react";
 
 
+const NavAlt = () => {
+    const res = useSession();
+    return (
+        <nav>
+            {JSON.stringify(res)}
+        </nav>
+    )
+}
 const NavBar: React.FC = () => {
     const router = useRouter();
     const { data: session, status } = useSession();
