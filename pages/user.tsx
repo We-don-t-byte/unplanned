@@ -9,7 +9,7 @@ import { Button } from "@material-tailwind/react";
 const UserProfile = () => {
   const { data: session, status } = useSession();
 
-  console.log(session);
+  // console.log(session);
 
   return (
     <PageModule title="Perfil">

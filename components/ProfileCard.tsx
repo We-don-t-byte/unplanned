@@ -23,7 +23,7 @@ const ProfileCard: React.FC<Props> = (props) => {
             {props.name}
           </p>
           <p className="text-gray-500 font-regular text-md">{props.email}</p>
-          <div className="bg-white w-full p-4">'{props.children}</div>
+          <div className="bg-white w-full p-4">{props.children}</div>
         </div>
       </div>
     </div>
