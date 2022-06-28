@@ -6,7 +6,7 @@ import PlaceCard from "./PlaceCard";
 
 const CardList = () => {
   return (
-    <div className="mx-4 sm:w-3/4 sm:w-screen sm:mx-4">
+    <div className="mx-4">
       <div className="h-full pt-6">
         <PlaceCard
           name="Storia D'amore"

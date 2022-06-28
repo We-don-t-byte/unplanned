@@ -9,7 +9,7 @@ const Swiper = () => {
     console.log(d);
   };
   return (
-    <div className="swiper min-h-full mx-4 h-full pt-6">
+    <div className="">
       <CardSwiper
         onSwipe={handleSwipe}
         contents={
