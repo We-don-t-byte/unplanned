@@ -1,60 +1,37 @@
-import React, { useState } from 'react';
-import Paper from '@mui/material/Paper';
+import React, { ReactNode } from "react";
 
+type Props = {
+  name: string;
+  address: string;
+  image: string;
+  tags?: string[];
+};
 
-const PlaceCard = (props: any) => {
-  const [isHovered, setIsHovered] = useState(false);
-  const place  = props;
-
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-  }
-
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-  }
-
+const PlaceCard: React.FC<Props> = (props) => {
   return (
-    <Paper
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      elevation={isHovered ? 4 : 1}
-      style={{
-        padding: '10px',
-        margin: '10px',
-        width: '300px',
-        height: '200px',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-      }}
-    >
-      // Image div
-      <div style={{
-        width: '100%',
-        height: '100%',
-        backgroundImage: `url(${place?.image})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-      }} />
-      // Text div
-      <div style={{
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        height: '100%',
-        width: '100%',
-        padding: '10px',
-      }}>
-        <h3>{place?.name}</h3>
-        <p>{place?.description}</p>
-
+    <div className="overflow-hidden font-nunito shadow-lg rounded-xl h-100 w-full cursor-pointer m-auto">
+      <div className="w-full block h-full">
+        <img
+          alt="Fotografía del lugar"
+          src={props.image}
+          className="h-80 min-w-full w-full object-cover"
+        />
+        <div className="bg-white w-full p-4">
+          <p className="text-gray-800 text-xl font-extrabold mb-2">
+            {props.name}
+          </p>
+          <p className="text-gray-500 font-regular text-md">{props.address}</p>
+          <div className="flex flex-wrap justify-starts items-center mt-4">
+            {props.tags?.map((tag) => (
+              <div className="text-xs mr-2 py-1.5 px-4 text-gray-600 bg-green-100 rounded-2xl">
+                {tag}
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
-    </Paper>
+    </div>
   );
-}
+};
 
 export default PlaceCard;

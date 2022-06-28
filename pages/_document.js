@@ -1,40 +1,44 @@
-import Document, { Html, Head, Main, NextScript } from 'next/document'
-import createEmotionServer from '@emotion/server/create-instance';
-import createEmotionCache from '../lib/createEmotionCache';
-import React from 'react'
+import Document, { Html, Head, Main, NextScript } from "next/document";
+import createEmotionServer from "@emotion/server/create-instance";
+import createEmotionCache from "../lib/createEmotionCache";
+import React from "react";
 
 class MyDocument extends Document {
-	render() {
-		return (
-			<Html>
-				<Head>
-					<link
-						rel="stylesheet"
-						href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-					/>
-					<link
-						rel="stylesheet"
-						href="https://fonts.googleapis.com/icon?family=Material+Icons"
-					/>
-				</Head>
-				<body>
-					<Main />
-					<NextScript />
-				</body>
-			</Html>
-		)
-	}
+  render() {
+    return (
+      <Html>
+        <Head>
+          <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+          />
+          <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          />
+          <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;700;800;900&display=swap"
+          />
+        </Head>
+        <body>
+          <Main />
+          <NextScript />
+        </body>
+      </Html>
+    );
+  }
 }
 
-export default MyDocument
+export default MyDocument;
 
 MyDocument.getInitialProps = async (ctx) => {
-	const originalRenderPage = ctx.renderPage;
+  const originalRenderPage = ctx.renderPage;
 
-	const cache = createEmotionCache();
-	const { extractCriticalToChunks } = createEmotionServer(cache);
+  const cache = createEmotionCache();
+  const { extractCriticalToChunks } = createEmotionServer(cache);
 
-	 ctx.renderPage = () =>
+  ctx.renderPage = () =>
     originalRenderPage({
       enhanceApp: (App) =>
         function EnhanceApp(props) {
@@ -49,7 +53,7 @@ MyDocument.getInitialProps = async (ctx) => {
   const emotionStyles = extractCriticalToChunks(initialProps.html);
   const emotionStyleTags = emotionStyles.styles.map((style) => (
     <style
-      data-emotion={`${style.key} ${style.ids.join(' ')}`}
+      data-emotion={`${style.key} ${style.ids.join(" ")}`}
       key={style.key}
       // eslint-disable-next-line react/no-danger
       dangerouslySetInnerHTML={{ __html: style.css }}
@@ -64,4 +68,4 @@ MyDocument.getInitialProps = async (ctx) => {
       ...emotionStyleTags,
     ],
   };
-}
+};

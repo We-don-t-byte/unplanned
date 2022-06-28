@@ -42,11 +42,11 @@ CREATE TABLE "User" (
     "id" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "preferences" JSONB,
     "name" TEXT,
     "email" TEXT,
     "emailVerified" TIMESTAMP(3),
     "image" TEXT,
-    "preferences" JSONB NOT NULL,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
@@ -82,6 +82,7 @@ CREATE TABLE "EmployeesByCompany" (
 -- CreateTable
 CREATE TABLE "Store" (
     "id" TEXT NOT NULL,
+    "mapsId" TEXT NOT NULL,
     "companyId" TEXT NOT NULL,
     "locationId" TEXT NOT NULL,
     "listing" JSONB NOT NULL,
@@ -140,6 +141,9 @@ CREATE UNIQUE INDEX "VerificationToken_identifier_token_key" ON "VerificationTok
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Company_email_key" ON "Company"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Store_mapsId_key" ON "Store"("mapsId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "StoreProfile_storeId_key" ON "StoreProfile"("storeId");
