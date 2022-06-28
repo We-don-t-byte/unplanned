@@ -1,5 +1,4 @@
 import React from "react";
-import { CardSwiper } from "react-card-rotate-swiper";
 import PlaceCard from "./PlaceCard";
 
 //...

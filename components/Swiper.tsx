@@ -1,5 +1,5 @@
 import React from "react";
-import { CardSwiper } from "react-card-rotate-swiper";
+import TinderCard from "react-tinder-card";
 import PlaceCard from "../components/PlaceCard";
 
 //...
@@ -10,20 +10,15 @@ const Swiper = () => {
   };
   return (
     <div className="">
-      <CardSwiper
-        onSwipe={handleSwipe}
-        contents={
-          <PlaceCard
-            name="Storia D'amore"
-            address="Carrera 13 # 82 -36
+      <TinderCard preventSwipe={["up", "down"]}>
+        <PlaceCard
+          name="Storia D'amore"
+          address="Carrera 13 # 82 -36
             Bogotá, Colombia"
-            image="https://restaurantestoriadamore.com/media/82-7.jpg"
-            tags={["Restaurante", "Café", "Bar"]}
-          />
-        }
-        detectingSize={200}
-        throwLimit={1000}
-      />
+          image="https://restaurantestoriadamore.com/media/82-7.jpg"
+          tags={["Restaurante", "Café", "Bar"]}
+        />
+      </TinderCard>
     </div>
   );
 };
