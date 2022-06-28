@@ -1,7 +1,6 @@
 import React from "react";
 
 import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
 
 import { Navbar, Button } from "@material-tailwind/react";
 
@@ -58,16 +57,18 @@ const profile_icon = (
 
 const BottomNavbar: React.FC = () => {
   const router = useRouter();
-  const { data: session, status } = useSession();
 
   const routes: [string, string, JSX.Element][] = [
     ["Favorites", "/favorites", favorites_icon],
     ["Home", "/", home_icon],
-    ["Profile", `/user/${session?.user?.id}`, profile_icon],
+    ["Profile", `/user`, profile_icon],
   ];
 
   return (
-    <Navbar fullWidth={true} className="fixed bottom-0 justify-center">
+    <Navbar
+      fullWidth={true}
+      className="fixed bottom-0 justify-center z-20 bg-opacity-100"
+    >
       <div className="container flex items-center justify-center justify-between text-blue-grey-900">
         {routes.map(([label, href, icon]) => (
           <Button

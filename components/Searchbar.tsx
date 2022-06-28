@@ -1,5 +1,7 @@
 import React from "react";
 
+import router from "next/router";
+
 import { Button } from "@material-tailwind/react";
 
 const Searchbar = (props: any) => {
@@ -21,6 +23,7 @@ const Searchbar = (props: any) => {
           variant="gradient"
           className="rounded-full"
           size="md"
+          onClick={() => router.push("/discover")}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
