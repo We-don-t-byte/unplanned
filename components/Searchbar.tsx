@@ -9,12 +9,24 @@ const Searchbar = (props: any) => {
   const [searchKeyword,setSearchKeyword] = React.useState("");
   let lat: number | undefined = undefined;
   let long: number | undefined = undefined;
-  useEffect(() => {
-  navigator.geolocation.getCurrentPosition((position) => { lat = position.coords.latitude; long = position.coords.longitude;}, (error) => { console.log(error); }, { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 });
+  const ref = React.useRef<{lat: number, long: number}>();
+    useEffect(() => {
+  navigator.geolocation.getCurrentPosition((position) => { 
+    if (ref.current !== undefined) {
+      ref.current.lat = position.coords.latitude;
+      ref.current.long = position.coords.longitude;
+    }
+  }, (error) => { console.log(error); }, { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 });
   },[]);
   const handleSearch = () => {
     // console.log("keyoword", searchKeyword);
-    const query = { searchKeyword, lat, long, radius: 1000 };
+    let query;
+    if (ref.current !== undefined) {
+      query = { searchKeyword, lat: ref.current.lat , long: ref.current.long , radius: 1000 };
+    }
+    else {
+      query = { searchKeyword, lat, long, radius: 1000 };
+    }
     router.push({pathname: "/discover", query});
     };
   return (
