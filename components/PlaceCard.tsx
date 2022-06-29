@@ -14,6 +14,7 @@ const PlaceCard: React.FC<Props> = (props) => {
       className={`overflow-hidden font-nunito shadow-lg rounded-xl ${props?.className}`}
     >
       <img
+        key={"imagen"}
         alt="Fotografía del lugar"
         src={props.image}
         className="h-80 min-w-full w-full object-cover"
@@ -27,8 +28,8 @@ const PlaceCard: React.FC<Props> = (props) => {
         <p className="text-gray-500 font-regular text-md">{props.address}</p>
         {/* Tags */}
         <div className="flex flex-wrap justify-starts items-center mt-4">
-          {props.tags?.map((tag) => (
-            <div className="text-xs mr-2 py-1.5 px-4 text-gray-600 bg-green-100 rounded-2xl">
+          {props.tags?.map((tag, index) => (
+            <div key={index} className="text-xs mr-2 py-1.5 px-4 text-gray-600 bg-green-100 rounded-2xl">
               {tag}
             </div>
           ))}

@@ -19,12 +19,17 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   }
   const { user } = session;
 
+  // console.log("ctx",ctx);
   const { query } = ctx;
+  // console.log("params", query)
   const places = await getNearbyPlaces(
-    [4.649899928848368, -74.05539863377577],
-    5000,
+    // [4.649899928848368, -74.05539863377577],
+    [parseFloat(query?.lat as string || "4.629038177572612"), 
+     parseFloat(query?.long as string  || "-74.07522295757732")],
+    parseInt(query?.radius as string ||  "5000"),
     "restaurant",
-    "Comida árabe"
+    // "Comida árabe"
+    query?.searchKeyword as string || "Comida árabe"
   );
   return {
     props: {
@@ -40,7 +45,7 @@ type Props = {
 const Discover: NextPage<Props> = ({ places }) => {
   return (
     <PageModule title="Descubrir">
-      <Swiper places={[places[0]]} />
+      <Swiper places={[...places]} />
     </PageModule>
   );
 };

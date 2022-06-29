@@ -1,14 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import router from "next/router";
 
 import { Button } from "@material-tailwind/react";
-import { url } from "inspector";
+
 
 const Searchbar = (props: any) => {
+  const [searchKeyword,setSearchKeyword] = React.useState("");
+  let lat: number | undefined = undefined;
+  let long: number | undefined = undefined;
+  useEffect(() => {
+  navigator.geolocation.getCurrentPosition((position) => { lat = position.coords.latitude; long = position.coords.longitude;}, (error) => { console.log(error); }, { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 });
+  },[]);
   const handleSearch = () => {
-    router.push("/discover", undefined, {});
-  };
+    // console.log("keyoword", searchKeyword);
+    const query = { searchKeyword, lat, long, radius: 1000 };
+    router.push({pathname: "/discover", query});
+    };
   return (
     // Tailwind Search Bar
     <div>
@@ -20,6 +28,8 @@ const Searchbar = (props: any) => {
             id="simple-search"
             className="bg-gray-500 text-gray-900 text-xl rounded-full block w-full pl-5 p-2.5 focus:drop-shadow-xl focus:outline-none"
             placeholder="Comida italiana..."
+            value={searchKeyword}
+            onChange={(e) => setSearchKeyword(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 e.preventDefault();
@@ -41,11 +51,11 @@ const Searchbar = (props: any) => {
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
-            stroke-width="2"
+            strokeWidth="2"
           >
             <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeLinecap="round"
+              strokeLinejoin="round"
               d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
             />
           </svg>
