@@ -7,7 +7,7 @@ export const maps = new Client({});
 
 type valid_places = "restaurant" | "museum" | "night_club" | "cafe";
 
-async function getNearbyPlaces(
+export async function getNearbyPlaces(
   location: [number, number],
   radius: number,
   type: valid_places,
@@ -56,4 +56,4 @@ async function main() {
     place.business_status
   );
 }
-main();
+// main();

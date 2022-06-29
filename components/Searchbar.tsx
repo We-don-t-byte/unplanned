@@ -1,12 +1,13 @@
-import React from "react";
+import React, {useState} from "react";
 
 import router from "next/router";
 
 import { Button } from "@material-tailwind/react";
 
 const Searchbar = (props: any) => {
+  const [keyword,setKeyword] = useState("");
   const handleSearch = () => {
-    router.push("/discover")
+    router.push({pathname: "/discover", query: {keyword,type: "restaurant",radius: 500,minPrice: undefined,maxPrice: undefined}});
   }
   return (
     // Tailwind Search Bar
@@ -19,6 +20,8 @@ const Searchbar = (props: any) => {
             id="simple-search"
             className="bg-gray-500 text-gray-900 text-xl rounded-full block w-full pl-5 p-2.5 focus:drop-shadow-xl focus:outline-none"
             placeholder="Comida italiana..."
+            value={keyword}
+            onChange={e => setKeyword(e.target.value)}
             onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); handleSearch()}}}
           ></input>
         </div>

@@ -1,24 +1,20 @@
 import React from "react";
 import { CardSwiper } from "react-card-rotate-swiper";
 import PlaceCard from "../components/PlaceCard";
-
+import { PlaceData } from "@googlemaps/google-maps-services-js";
 //...
 
-const Swiper = () => {
-  const handleSwipe = (d: any) => {
+const Swiper: React.FC<{placeData: Partial<PlaceData>, handleSwipe: (d: "left" | "right") => void}> = ({placeData, handleSwipe}) => {
+  handleSwipe = (d) => {
     console.log(d);
-  };
+  }
   return (
     <div className="">
       <CardSwiper
-        onSwipe={handleSwipe}
+        onSwipe={(d:("left"|"right")) => handleSwipe(d)}
         contents={
           <PlaceCard
-            name="Storia D'amore"
-            address="Carrera 13 # 82 -36
-            Bogotá, Colombia"
-            image="https://restaurantestoriadamore.com/media/82-7.jpg"
-            tags={["Restaurante", "Café", "Bar"]}
+            placeData={placeData}
           />
         }
         detectingSize={200}

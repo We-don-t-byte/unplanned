@@ -59,6 +59,8 @@ model User {
   employers   EmployeesByCompany[]
   likes       Likes[]
   preferences Json?
+  numRecommendations Int @default(10)
+  lastRecommendation DateTime @default(now())
 
   // next-auth model requiremente
   name            String?
@@ -102,8 +104,8 @@ model EmployeesByCompany {
 model Store {
   id              String           @id @default(cuid())
   mapsId          String           @unique
-  company         Company          @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  companyId       String
+  company         Company?          @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId       String?
   locationId      String
   profile         StoreProfile?
   listing         Json
