@@ -14,7 +14,7 @@ const PageModule: React.FC<Props> = (props) => {
           {props.title}
         </h1>
       </div>
-      <div className="min-w-screen z-10 mt-16 mb-24 self-center items-center">
+      <div className="z-10 mt-16 mb-24 self-center justify-center">
         {props.children}
       </div>
     </main>

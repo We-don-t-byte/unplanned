@@ -1,6 +1,7 @@
 import React, { ReactNode } from "react";
 import TinderCard from "react-tinder-card";
 import PlaceCard from "../components/PlaceCard";
+import router from "next/router";
 
 //...
 
@@ -11,24 +12,43 @@ type TinderCardProps = Parameters<typeof TinderCard>[0] & {
 const UnplannedCard: React.FC<TinderCardProps> = TinderCard;
 
 type Props = {
-  places: string[];
+  places: any[];
 };
 
-const Swiper = () => {
-  const handleSwipe = (d: any) => {
-    console.log(d);
-  };
+function like() {
+  //TODO: Add liked place to user data
+}
+
+function reject() {
+  //TODO: refresh only the component that was rejected
+  router.reload();
+}
+
+const Swiper: React.FC<Props> = ({ places }) => {
   return (
-    <div className="">
-      <UnplannedCard preventSwipe={["up", "down"]}>
-        <PlaceCard
-          name="Storia D'amore"
-          address="Carrera 13 # 82 -36
-            Bogotá, Colombia"
-          image="https://restaurantestoriadamore.com/media/82-7.jpg"
-          tags={["Restaurante", "Café", "Bar"]}
-        />
-      </UnplannedCard>
+    <div>
+      {places.map((place) => (
+        <UnplannedCard
+          preventSwipe={["up", "down"]}
+          onSwipe={(direction) => {
+            if (direction === "right") {
+              like();
+            } else {
+              reject();
+            }
+          }}
+          swipeRequirementType="position"
+          swipeThreshold={100}
+        >
+          <PlaceCard
+            name={place?.name}
+            address={place?.vicinity}
+            image={place?.photo}
+            tags={place?.types.slice(0, 3)}
+            className="top-20 left-10 mx-6"
+          />
+        </UnplannedCard>
+      ))}
     </div>
   );
 };

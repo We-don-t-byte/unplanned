@@ -1,13 +1,18 @@
-import * as dotenv from "dotenv";
-import { Client } from "@googlemaps/google-maps-services-js";
-
-dotenv.config();
+import { Client, Language } from "@googlemaps/google-maps-services-js";
 
 export const maps = new Client({});
 
 type valid_places = "restaurant" | "museum" | "night_club" | "cafe";
 
-async function getNearbyPlaces(
+function shuffle(array: any[]) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+export async function getNearbyPlaces(
   location: [number, number],
   radius: number,
   type: valid_places,
@@ -18,42 +23,27 @@ async function getNearbyPlaces(
   const params = {
     location,
     key: process.env.MAPS_API_KEY as string,
+    language: Language.es,
     radius,
     type,
     keyword,
     minPrice,
     maxprice,
   };
+
   let {
-    data: {
-      results: places,
-      // next_page_token: next_page_token
-    },
+    data: { results: places },
   } = await maps.placesNearby({ params });
-  // if (next_page_token) {
-  //     places = [...places, ...(await getNearbyPlaces(location, radius, type, maxprice, next_page_token))];
-  // }
-  return places;
-}
 
-function getRandomPlace(places: any[]) {
-  return places[Math.floor(Math.random() * places.length)];
-}
+  let placesWithPhoto = places.map((place) => {
+    return {
+      ...place,
+      photo: `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${place.photos?.[0]?.photo_reference}&key=${params.key}`,
+    };
+  });
 
-async function main() {
-  const places = await getNearbyPlaces(
-    [4.649899928848368, -74.05539863377577],
-    1000,
-    "night_club"
-  );
-  console.log(places.map(({ name }) => name));
+  // Randomize the order of the places
+  placesWithPhoto = shuffle(placesWithPhoto);
 
-  const place = getRandomPlace(places);
-  console.log(
-    place.name,
-    place.vicinity,
-    place.types.join(", "),
-    place.business_status
-  );
+  return placesWithPhoto;
 }
-main();
