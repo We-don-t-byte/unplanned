@@ -40,7 +40,7 @@ const Searchbar = (props: any) => {
   return (
     // Tailwind Search Bar
     <div>
-      <form className="flex flex-col items-center">
+      <form className="flex flex-col items-center space-y-8">
         <div className="flex items-center">
         <label className="sr-only">Search</label>
         <div className="relative w-full">
@@ -82,6 +82,7 @@ const Searchbar = (props: any) => {
           </svg>
         </Button>
         </div>
+      <div className="flex flex-col items-center space-y-8 w-full">
           <h2 className="text-2xl font-bold font-nunito text-green-700 dark:text-white sm:text-4xl">
             Distancia
           </h2>
@@ -95,6 +96,8 @@ const Searchbar = (props: any) => {
               value={radius}
               onChange={(value) => setRadius(value)}
             />
+            </div>
+      <div className="flex flex-col items-center space-y-8 w-full">
           <h2 className="text-2xl font-bold font-nunito text-green-700 dark:text-white sm:text-4xl">
             Precio
           </h2>
@@ -110,6 +113,7 @@ const Searchbar = (props: any) => {
               marks={true}
               onChange={(value, index) => {[setMinPrice, setMaxPrice][index](value[index])}}
             />
+            </div>
       </form>
     </div>
   );
