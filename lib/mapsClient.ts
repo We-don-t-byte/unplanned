@@ -36,9 +36,13 @@ export async function getNearbyPlaces(
   } = await maps.placesNearby({ params });
 
   let placesWithPhoto = places.map((place) => {
+    let photo = "https://http.cat/413";
+    if (place.photos) {
+      photo = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${place.photos?.[0]?.photo_reference}&key=${params.key}`;
+    }
     return {
       ...place,
-      photo: `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${place.photos?.[0]?.photo_reference}&key=${params.key}`,
+      photo,
     };
   });
 

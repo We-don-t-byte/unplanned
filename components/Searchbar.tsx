@@ -7,27 +7,22 @@ import { Button } from "@material-tailwind/react";
 
 const Searchbar = (props: any) => {
   const [searchKeyword,setSearchKeyword] = React.useState("");
-  let lat: number | undefined = undefined;
-  let long: number | undefined = undefined;
-  const ref = React.useRef<{lat: number, long: number}>();
+  const ref = React.useRef<{lat: number | undefined, long: number | undefined}>({lat: undefined, long: undefined});
     useEffect(() => {
-  navigator.geolocation.getCurrentPosition((position) => { 
-    if (ref.current !== undefined) {
-      ref.current.lat = position.coords.latitude;
-      ref.current.long = position.coords.longitude;
-    }
-  }, (error) => { console.log(error); }, { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 });
+    navigator.geolocation.getCurrentPosition((position) => { 
+      if (ref.current !== undefined) {
+        ref.current.lat = position.coords.latitude;
+        ref.current.long = position.coords.longitude;
+      }
+    }, (error) => { console.log(error); }, { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 });
   },[]);
   const handleSearch = () => {
     // console.log("keyoword", searchKeyword);
-    let query;
-    if (ref.current !== undefined) {
-      query = { searchKeyword, lat: ref.current.lat , long: ref.current.long , radius: 1000 };
+    console.log(ref.current);
+    if (ref.current.lat !== undefined && ref.current.long !== undefined) {
+      const query = { searchKeyword, lat: ref.current.lat , long: ref.current.long , radius: 1000 };
+      router.push({pathname: "/discover", query});
     }
-    else {
-      query = { searchKeyword, lat, long, radius: 1000 };
-    }
-    router.push({pathname: "/discover", query});
     };
   return (
     // Tailwind Search Bar
