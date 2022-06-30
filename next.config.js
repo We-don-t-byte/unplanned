@@ -7,6 +7,7 @@ const nextConfig = {
   env: {
     MAPS_API_KEY: process.env.MAPS_API_KEY,
   },
+  experimental: { esmExternals: false }
 };
 
 module.exports = nextConfig;

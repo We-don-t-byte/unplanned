@@ -29,7 +29,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     parseInt(query?.radius as string ||  "5000"),
     "restaurant",
     // "Comida árabe"
-    query?.searchKeyword as string || "Comida árabe"
+    query?.searchKeyword as string || "Comida árabe",
+    parseInt(query?.minPrice as string) as 0 | 1 | 2 | 3 | 4 || 0,
+    parseInt(query?.maxPrice as string) as 0 | 1 | 2 | 3 | 4 || 4,
   );
   return {
     props: {

@@ -7,6 +7,7 @@ import styles from "../styles/Home.module.css";
 import { Typography } from "@material-tailwind/react";
 import Searchbar from "../components/Searchbar";
 import PageModule from "../components/PageModule";
+import ReactSlider from "react-slider";
 
 const Home: NextPage = () => {
   return (
