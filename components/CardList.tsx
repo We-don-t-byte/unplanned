@@ -2,34 +2,27 @@ import React from "react";
 import PlaceCard from "./PlaceCard";
 
 //...
+export type place = {
+  name: string ;
+  vicinity: string ;
+  photo: string ;
+  types: string[];
+}
 
-const CardList = () => {
+const CardList: React.FC<{places: place[]}> = ({places}) => {
   return (
     <div className="mx-4">
-      <div className="h-full pt-6">
+      {places.map((place, index) => (
+      <div className="h-full pt-6" key={index}>
         <PlaceCard
-          name="Storia D'amore"
-          address="Carrera 13 # 82 -36"
-          image="https://restaurantestoriadamore.com/media/82-7.jpg"
-          tags={["Restaurante", "Café", "Bar"]}
+          name={place?.name}
+          address={place?.vicinity}
+          image={place?.photo}
+          tags={place?.types.slice(0, 3)}
+          className="top-20 left-10 mx-6 position-relative"
         />
-      </div>
-      <div className="h-full pt-6">
-        <PlaceCard
-          name="LEO"
-          address="Calle 65bis # 4-23"
-          image="http://restauranteleo.com/wp-content/uploads/2021/09/fachada.jpg"
-          tags={["Restaurante", "Alta cocina"]}
-        />
-      </div>
-      <div className="h-full pt-6">
-        <PlaceCard
-          name="Frites Artois"
-          address="Carrera 12 #83-53"
-          image="https://www.semana.com/resizer/ddRmFV0SwIh-lLbovLyJupjLcc4=/1200x675/filters:format(jpg):quality(50)//cloudfront-us-east-1.images.arcpublishing.com/semana/NI4H7T3MHZFMBP23ECWSZHQZEY.jpg"
-          tags={["Restaurante", "Cerveza"]}
-        />
-      </div>
+      </div>))
+      }
     </div>
   );
 };

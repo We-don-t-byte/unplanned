@@ -67,6 +67,9 @@ model User {
   image           String?
   accounts        Account[]
   sessions        Session[]
+  dislikeCount    Int  @default(0)
+  likeCount       Int @default(0)
+  saved           Json[]
   recommendations Recommendation[]
 }
 

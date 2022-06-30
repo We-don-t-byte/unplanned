@@ -3,6 +3,7 @@ import TinderCard from "react-tinder-card";
 import PlaceCard from "../components/PlaceCard";
 import router from "next/router";
 import dynamic from 'next/dynamic';
+import { useSession } from "next-auth/react";
 function mod(n: number, m: number) {
   return ((n % m) + m) % m;
 }
@@ -23,21 +24,24 @@ type Props = {
   places: any[];
 };
 
-function like() {
-  //TODO: Add liked place to user data
-}
 
 
 const Swiper: React.FC<Props> = ({ places }) => {
   const [place, setPlace] = useState(places[0]);
   const [index, setIndex] = useState(0)
+  const { data: session, status } = useSession();
   if (places.length === 0) {
     return <p>No se encontraron lugares :c</p>;
   }
+  function like() {
+    if (session && session.user && session.user.id) {
+    fetch(`/api/user/${session.user.id}/like`, { method: "POST", body: JSON.stringify({ place: place }) });
+    }
+  }
   function reject() {
-    //TODO: refresh only the component that was rejected
-    // router.reload();
-    // setDivIndex(divIndex + 1);
+    if (session && session.user && session.user.id) {
+      fetch(`/api/user/${session.user.id}/dislike`, { method: "POST"});
+    }
   }
   return (
     <div>
