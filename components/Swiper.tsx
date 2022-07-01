@@ -4,6 +4,7 @@ import PlaceCard from "../components/PlaceCard";
 import router from "next/router";
 import dynamic from 'next/dynamic';
 import { useSession } from "next-auth/react";
+import NoPlaces from "./NoPlaces";
 function mod(n: number, m: number) {
   return ((n % m) + m) % m;
 }
@@ -31,7 +32,7 @@ const Swiper: React.FC<Props> = ({ places }) => {
   const [index, setIndex] = useState(0)
   const { data: session, status } = useSession();
   if (places.length === 0) {
-    return <p>No se encontraron lugares :c</p>;
+    return <NoPlaces />;
   }
   function like() {
     if (session && session.user && session.user.id) {
