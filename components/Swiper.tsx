@@ -4,6 +4,7 @@ import PlaceCard from "../components/PlaceCard";
 import router from "next/router";
 import dynamic from 'next/dynamic';
 import { useSession } from "next-auth/react";
+import NoPlaces from "./NoPlaces";
 function mod(n: number, m: number) {
   return ((n % m) + m) % m;
 }
@@ -30,9 +31,6 @@ const Swiper: React.FC<Props> = ({ places }) => {
   const [place, setPlace] = useState(places[0]);
   const [index, setIndex] = useState(0)
   const { data: session, status } = useSession();
-  if (places.length === 0) {
-    return <p>No se encontraron lugares :c</p>;
-  }
   function like() {
     if (session && session.user && session.user.id) {
     fetch(`/api/user/${session.user.id}/like`, { method: "POST", body: JSON.stringify({ place: place }) });
@@ -44,7 +42,8 @@ const Swiper: React.FC<Props> = ({ places }) => {
     }
   }
   return (
-    <div>
+    (index >= places.length) ? (<NoPlaces />) :
+    (<div>
         <UnplannedCard
           className="position-absolute"
           key = {index}
@@ -71,7 +70,7 @@ const Swiper: React.FC<Props> = ({ places }) => {
             className="top-20 left-10 mx-6 position-relative"
           />
         </UnplannedCard>
-    </div>
+    </div>)
   );
 };
 

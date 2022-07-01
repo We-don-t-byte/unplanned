@@ -34,10 +34,19 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     };
 
   }
+  const saved = user.saved as place[];
+  const places: place[] = [];
+  const placeNames = new Set<string>();
+  saved.forEach((p) => {
+    if (!placeNames.has(p.name)) {
+      places.push(p);
+      placeNames.add(p.name);
+    }
+  })
 
   return {
     props: {
-      places: user.saved as place[],
+      places: places,
     },
   };
 }
